@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title></title>
+	
+	  <style type="text/css">
+			th { padding: 5px 20px;}
+			td { text-align: center;  padding: 5px 20px;}
+		</style>
+</head>
+<body>
+	<div id="box">
+		添加品牌：<input type="text" v-model="newName" /><input type="button" value="添加" v-on:click="addData" />
+		<br /><br />
+		
+		<table border="1" cellspacing="0" cellpadding="1">
+			<tr>
+				<th>ID</th>
+				<th>品牌</th>
+				<th>添加时间</th> 
+				<th>操作</th>
+			</tr>
+			
+			 <tr v-for="(item,index) in list">
+			 	<th>{{index+1}}</th>
+			 	<th>{{item.name}}</th>
+			 	<th>{{item.time}}</th>
+			 	<td><a href="javascript:;"v-on:click="updataBtn(item.name,index)">修改</a> | <a href="javascript:;" v-on:click="delData(index)">删除</a></td>
+			 </tr>
+		</table>
+		<br />
+		修改品牌：<input type="text" v-model="newInfo" /><input type="button" value="修改" v-on:click="putData" />
+	</div>
+</body>
+
+         <script src="vue221.js" type="text/javascript"></script>
+         <script type="text/javascript">
+         	var p1 = new Vue({
+         		el:"#box",
+         		data:{
+         			
+         			list:[
+         			     {name:"宝马",time:new Date()},
+         			     {name:"奔驰",time:new Date()},
+         			     {name:"路虎",time:new Date()},
+         			     {name:"吉普",time:new Date()}
+         			
+         			],
+         		
+         			newName:"",
+         			newInfo:"",
+         			index:null
+         		},
+         		methods:{
+         		   addData:function(){
+         			if (!this.newName){
+         				 alert("请填写品牌");
+         				 return;
+         			}
+         			var obj ={name:this.newName,time:new Date()};
+         			this.list.push(obj);
+         			this.newName = "";
+         		},
+         		
+         		delData:function(value){
+         			this.list.splice(value,1)
+         		},
+         		updataBtn:function(value,value2){
+         			this.newInfo =value;
+         			this.index=value2;
+         		},
+         		
+         		putData:function(){
+         			if (!this.newInfo) {
+         				alert("请填写品牌");
+         				return;
+         			}
+         			
+         			var obj = {name:this.newInfo,time:new Date()};
+					this.list.splice(this.index,1,obj);
+         		}
+         	}
+         		
+         	})
+         	
+         </script>
+</html>
